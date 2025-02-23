@@ -14,7 +14,7 @@ namespace webApiProduct.DataAccess
             _connectionString = connectionString;
         }
 
-        public async  Task<IEnumerable<Product>> GetProductsList()
+        public async  Task<List<Product>> GetProductsList()
         {
             List<Product> products = new List<Product>();
 

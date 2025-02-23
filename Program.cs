@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionSting = builder.Configuration.GetConnectionString("ConnString");
+var connectionSting = builder.Configuration.GetConnectionString("defaultConnection");
 builder.Services.AddSingleton(new ProductRepository(connectionSting));
 
 var app = builder.Build();
