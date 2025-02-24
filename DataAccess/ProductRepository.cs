@@ -43,5 +43,22 @@ namespace webApiProduct.DataAccess
             }
 
         }
+
+        public async Task<bool> AddProduct(Product product)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using(var command = new SqlCommand("dbo.sp_insertProduct", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter("@CategoryName", product.CategoryName));
+                    command.Parameters.Add(new SqlParameter("@Price", product.Price));
+
+                    int rowsAffets = command.ExecuteNonQuery();
+                    return rowsAffets > 0;
+                }
+            }
+        }
     }
 }

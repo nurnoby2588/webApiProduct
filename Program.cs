@@ -1,3 +1,5 @@
+using Serilog;
+using Serilog.Events;
 using webApiProduct.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,13 @@ builder.Services.AddSwaggerGen();
 
 var connectionSting = builder.Configuration.GetConnectionString("defaultConnection");
 builder.Services.AddSingleton(new ProductRepository(connectionSting));
+
+builder.Host.UseSerilog((ctx, lc) => lc
+.MinimumLevel.Debug()
+.MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+.Enrich.FromLogContext()
+.ReadFrom.Configuration(builder.Configuration)
+);
 
 var app = builder.Build();
 

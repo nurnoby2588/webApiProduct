@@ -21,5 +21,20 @@ namespace webApiProduct.Controllers
             List<Product> products = await _productRepository.GetProductsList();
             return Ok(products);
         }
+
+        [HttpPost("addProduct")]
+        public async Task<IActionResult> addProduct([FromBody] Product request)
+        {
+            bool result = await _productRepository.AddProduct(request);
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }
