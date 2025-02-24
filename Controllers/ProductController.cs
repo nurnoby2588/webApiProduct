@@ -10,9 +10,11 @@ namespace webApiProduct.Controllers
     public class ProductController : ControllerBase
     {
         private readonly ProductRepository _productRepository;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(ProductRepository productRepository) { 
+        public ProductController(ProductRepository productRepository, ILogger<ProductController> logger) { 
         _productRepository = productRepository;
+            _logger = logger;
         }
 
         [HttpGet ("GetProduct")]
@@ -33,6 +35,21 @@ namespace webApiProduct.Controllers
             else
             {
                 return BadRequest();
+            }
+        }
+
+        [HttpGet("test")]
+        public OkObjectResult Test()
+        {
+            try
+            {
+                int a = Convert.ToInt32("dfs");
+                return Ok(200);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error");
+                return Ok(400);
             }
         }
 
